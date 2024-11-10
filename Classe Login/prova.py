@@ -3,29 +3,51 @@ from modulo_login import Utente, SistemaLogin
 
 
 # Definizione delle azioni di esempio
+
+
 def registrazione():
 
-    login.registra_utente(username, password, domanda_segreta)   
+    username = input("Inserisci l'username").lower()
+    if not login.controlla_utente(username):
+        password = input("Inserisci una password: ").lower()
+        domanda_segreta = input("Qual era il nome della tua scuola elementare?: ").lower()
+        login.crea_nuovo_utente(username, password, domanda_segreta)
+    else:
+        print("Utente già registrato, inserisci la password: ")
+        password = input("Inserisci la password: ").lower()
+        login.login(username, password)
 
-def equazione():
+def login():
+    
+    username = input("Inserisci l'username") 
+    if login.controlla_utente(username):
 
-    eq.start(utente)   
+        password = input("Inserisci la password: ")
+        login.login(username, password)
+    
+    else: 
 
-def ringrazia():
-    print("Grazie per aver utilizzato il menu!")
+        print("Utente non trovato. Registrarsi.")
+        menu.mostra_menu()
 
+def reset_password():
+
+    login.reset_password(username)
+
+def cambia_username():
+
+    login.cambia_username(old_username, new_username)
 
 
 
 
 menu = Menu()
-utente = Utente("stefi")
 login = SistemaLogin()
 
 
 
-elemento1 = Elemento("Indovina il Numero", Azione(numero))
-elemento2 = Elemento("Addio", Azione(equazione))
+elemento1 = Elemento("Registrazione", Azione(registrazione))
+elemento2 = Elemento("Login", Azione(login))
 elemento3 = Elemento("Ringraziamento", Azione(ringrazia))
 
 menu.aggiungi_elemento(elemento1)
