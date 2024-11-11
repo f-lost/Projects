@@ -120,7 +120,7 @@ class SistemaLogin:
         risposta = input("Rispondi alla domanda segreta: Qual è il nome delle tue elementari?: ").lower()
         if risposta == utente.external__get_domanda_segreta():
             nuova_password = input("Inserisci la nuova password: ")
-            utente.__set_password(nuova_password)
+            utente.external__set_password(nuova_password)
             print("Password aggiornata con successo!")
             return True
         else:
@@ -128,19 +128,19 @@ class SistemaLogin:
             return False
 
 
-sistema = SistemaLogin()
+# sistema = SistemaLogin()
 
-# Registrazione di un utente
-sistema.registra_utente("utente1", "password123", "scuola_elementare")
+# # Registrazione di un utente
+# sistema.registra_utente("utente1", "password123", "scuola_elementare")
 
-# Login
-sistema.login("utente1", "password123")
+# # Login
+# sistema.login("utente1", "password123")
 
-# Reset della password
-sistema.reset_password("utente1")
+# # Reset della password
+# sistema.reset_password("utente1")
 
-# Cambia l'username
-sistema.cambia_username("utente1", "nuovo_utente1")
+# # Cambia l'username
+# sistema.cambia_username("utente1", "nuovo_utente1")
 
 
     
