@@ -44,7 +44,7 @@ def analyze_and_plot_fixed(
 ) -> list:
     """
     Analizza un dataframe per categorie, calcola correlazioni significative, 
-    salva heatmap, JSON, e opzionalmente crea pairplot per le colonne correlate.
+    salva heatmap, JSON, e opzionalmente crea scatterplot per le colonne correlate.
 
     Parametri:
     dataframe : pd.DataFrame
@@ -57,7 +57,7 @@ def analyze_and_plot_fixed(
     savefig : bool, opzionale
         Se True, salva le heatmap come immagini PNG.
     agg_plot : bool, opzionale
-        Se True, salva i pairplot per le colonne correlate.
+        Se True, salva gli scatterplot per le colonne correlate.
 
     Restituisce:
     list
@@ -121,14 +121,15 @@ def analyze_and_plot_fixed(
                 plt.savefig(f'{save_path}/{group_name}_heatmap.png', bbox_inches='tight')
                 plt.close()
 
-            # Crea i pairplot, se richiesto
+            # Crea gli scatterplot, se richiesto
             if agg_plot:
                 correlated_columns = filtered.index.get_level_values(0).to_list()
-                pairplot_data = df_filtered[correlated_columns]
+                agg_plot_data = df_filtered[correlated_columns]
                 if len(correlated_columns) > 1:
-                    sns.pairplot(pairplot_data)
-                    plt.title(f'Pairplot for {category}: {group_name}')
-                    plt.savefig(f'{save_path}/{group_name}_pairplot.png', bbox_inches='tight')
+                    x_col, y_col = agg_plot_data.columns[:2]
+                    sns.scatterplot(data=df, x=x_col, y=y_col, palette='Set1')
+                    plt.title(f'Jointplot for {category}: {group_name}')
+                    plt.savefig(f'{save_path}/{group_name}_scatterplot.png', bbox_inches='tight')
                     plt.close()
 
         filtered_corr_list_total.append((category, filtered_corr_list))
@@ -158,5 +159,5 @@ if __name__ == "__main__":
     result = analyze_and_plot_fixed(
         df,
         savefig=True,  # Imposta True per salvare le heatmap
-        agg_plot=True  # Imposta True per salvare i pairplot
+        agg_plot=True  # Imposta True per salvare gli scatterplot
     )
