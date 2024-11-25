@@ -63,13 +63,14 @@ class Utente:
         self.__set_domanda_segreta(new_domanda_segreta)
 
 
+
 class SistemaLogin:
     def __init__(self):
-        # Dizionario per memorizzare gli utenti registrati: chiave = username, valore = oggetto Utente
+        # Dictionary to store registered users: key = username, value = Utente object
         self.utenti_registrati = {}
 
     def controlla_utente(self, username):
-        """Controlla se un username è già registrato."""
+        """Checks if a username is already registered."""
         if username in self.utenti_registrati:
             print("L'username esiste già.")
             return True
@@ -77,14 +78,14 @@ class SistemaLogin:
         return False
 
     def crea_nuovo_utente(self, username, password, domanda_segreta):
-        """Crea e registra un nuovo utente."""
+        """Creates and registers a new user."""
         nuovo_utente = Utente(username, password, domanda_segreta)
         self.utenti_registrati[username] = nuovo_utente
         print("Registrazione completata con successo!")
         return True
 
-    def login(self, username, password):
-        """Effettua il login verificando prima l'esistenza dell'username e poi la password."""
+    def effettua_login(self, username, password):
+        """Performs login by verifying username existence and password."""
         utente = self.utenti_registrati.get(username)
         
         if not utente:
@@ -99,7 +100,7 @@ class SistemaLogin:
         return True
 
     def cambia_username(self, old_username, new_username):
-        """Cambia l'username di un utente se il nuovo username è disponibile."""
+        """Changes a user's username if the new one is available."""
         utente = self.utenti_registrati.get(old_username)
         
         if not utente:
@@ -110,8 +111,14 @@ class SistemaLogin:
             print("Errore: Il nuovo username è già in uso.")
             return False
         
+        utente.external__set_username(new_username)
+        self.utenti_registrati[new_username] = utente
+        del self.utenti_registrati[old_username]
+        print("Username aggiornato con successo!")
+        return True
+
     def reset_password(self, username):
-        """Reset della password usando la domanda segreta."""
+        """Resets the password using the secret question."""
         utente = self.utenti_registrati.get(username)
         if not utente:
             print("Errore: Username non trovato.")
