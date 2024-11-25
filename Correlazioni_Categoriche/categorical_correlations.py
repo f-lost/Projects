@@ -70,7 +70,7 @@ def analyze_and_plot_fixed(
     
     # Se base_path non è fornito, usa il percorso corrente
     if base_path is None:
-        base_path = Path(__file__).parent
+        base_path = '/'
 
     # Categorie nel dataframe
     cat_col = dataframe.select_dtypes(include='object').columns
